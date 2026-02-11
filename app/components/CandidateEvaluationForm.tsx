@@ -40,8 +40,8 @@ export default function CandidateEvaluationForm() {
     if (Object.keys(scores).length < 6) return "Pending All Scores";
     if (score >= 85) return "Strong Fit";
     if (score >= 70) return "Good Fit";
-    if (score >= 55) return "Average";
-    return "Below Expectations";
+    if (score >= 55) return "Average Fit";
+    return "Low Fit";
   };
 
   const currentImpression = getImpression(weightedScorePercentage);
@@ -313,8 +313,8 @@ Kindly confirm your availability for the above schedule.`;
                     className={`p-4 rounded-xl text-center border-2 font-bold text-lg
                       ${currentImpression === 'Strong Fit' ? 'bg-green-50 border-green-200 text-green-700' :
                         currentImpression === 'Good Fit' ? 'bg-blue-50 border-blue-200 text-blue-700' :
-                          currentImpression === 'Average' ? 'bg-orange-50 border-orange-200 text-orange-700' :
-                            currentImpression === 'Below Expectations' ? 'bg-red-50 border-red-200 text-red-700' :
+                          currentImpression === 'Average Fit' ? 'bg-orange-50 border-orange-200 text-orange-700' :
+                            currentImpression === 'Low Fit' ? 'bg-red-50 border-red-200 text-red-700' :
                               'bg-slate-50 border-slate-200 text-slate-500'
                       }`}
                   >
