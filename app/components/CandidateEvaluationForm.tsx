@@ -24,6 +24,8 @@ export default function CandidateEvaluationForm() {
   const [comments, setComments] = useState("");
   const [customNoticePeriod, setCustomNoticePeriod] = useState("");
 
+  const [submitted, setSubmitted] = useState(false);
+
   const [candidateInfo, setCandidateInfo] = useState({
     name: "",
     mobile: "",
@@ -88,16 +90,36 @@ export default function CandidateEvaluationForm() {
         body: JSON.stringify(payload),
       });
 
-      setTimeout(() => {
-        window.location.reload();
-      }, 1500);
+      // Show success state instead of reloading
+      setSubmitted(true);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
 
     } catch (error) {
       console.error("Submission error:", error);
       alert("❌ Error saving to Google Sheet.");
     } finally {
-      // Keep loading true until reload
+      setLoading(false);
     }
+  };
+
+  const handleReset = () => {
+    setScores({});
+    setFile(null);
+    setComments("");
+    setCustomNoticePeriod("");
+    setCandidateInfo({
+      name: "",
+      mobile: "",
+      position: "Business Consultant",
+      interviewer: "Vipin Kumar",
+      date: "",
+      time: "",
+      currentSalary: "",
+      expectedSalary: "",
+      noticePeriod: "30 days"
+    });
+    setSubmitted(false);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleWhatsAppInvite = () => {
@@ -121,6 +143,76 @@ Kindly confirm your availability for the above schedule.`;
     const whatsappUrl = `https://wa.me/${formattedMobile.replace('+', '')}?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, '_blank');
   };
+
+  if (submitted) {
+    return (
+      <main className="min-h-screen text-slate-800 font-sans bg-slate-50 relative flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-0 pointer-events-none">
+          <div className="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] rounded-full bg-green-400/20 blur-3xl animate-pulse" />
+          <div className="absolute bottom-[-10%] right-[-10%] w-[600px] h-[600px] rounded-full bg-blue-400/20 blur-3xl animate-pulse delay-1000" />
+        </div>
+
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          className="relative z-10 w-full max-w-2xl"
+        >
+          <GlassCard className="p-12 text-center" gradient="from-green-50 to-blue-50">
+            <motion.div
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              transition={{ type: "spring", stiffness: 200, damping: 15 }}
+              className="w-24 h-24 rounded-full bg-green-100 flex items-center justify-center text-green-600 mx-auto mb-6 shadow-lg shadow-green-200"
+            >
+              <CheckCircle size={48} strokeWidth={3} />
+            </motion.div>
+
+            <h2 className="text-3xl font-extrabold text-slate-900 mb-2">Evaluation Submitted!</h2>
+            <p className="text-slate-500 mb-8">The candidate's data has been successfully saved to the system.</p>
+
+            <div className="bg-white/60 rounded-2xl p-6 mb-8 border border-white/60 shadow-inner">
+              <div className="flex flex-col md:flex-row justify-center items-center gap-8">
+                <div className="text-center">
+                  <p className="text-xs font-bold uppercase tracking-widest text-slate-400 mb-1">Candidate</p>
+                  <p className="text-xl font-bold text-slate-800">{candidateInfo.name}</p>
+                  <p className="text-sm text-slate-500">{candidateInfo.position}</p>
+                </div>
+
+                <div className="h-12 w-px bg-slate-200 hidden md:block" />
+
+                <div className="text-center">
+                  <p className="text-xs font-bold uppercase tracking-widest text-slate-400 mb-1">Score</p>
+                  <div className="flex items-center gap-2 justify-center">
+                    <span className="text-3xl font-black text-slate-800">{weightedScorePercentage.toFixed(1)}%</span>
+                  </div>
+                  <p className={`text-sm font-bold ${currentImpression === 'Strong Fit' ? 'text-green-600' :
+                      currentImpression === 'Good Fit' ? 'text-blue-600' :
+                        currentImpression === 'Average Fit' ? 'text-orange-600' : 'text-red-600'
+                    }`}>{currentImpression}</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="flex flex-col gap-3 max-w-xs mx-auto">
+              <button
+                onClick={handleWhatsAppInvite}
+                className="w-full py-3 rounded-xl font-bold text-white shadow-lg flex items-center justify-center gap-2 transition-all bg-[#25D366] hover:bg-[#20ba59]"
+              >
+                Send WhatsApp Invite <MessageSquare size={18} />
+              </button>
+
+              <button
+                onClick={handleReset}
+                className="w-full py-3 rounded-xl font-bold text-slate-700 bg-white border border-slate-200 shadow-sm hover:bg-slate-50 hover:border-slate-300 transition-all flex items-center justify-center gap-2"
+              >
+                Evaluate Another Candidate <User size={18} />
+              </button>
+            </div>
+          </GlassCard>
+        </motion.div>
+      </main>
+    );
+  }
 
   return (
     <main className="min-h-screen text-slate-800 font-sans selection:bg-blue-200 selection:text-blue-900 bg-slate-50 relative">
@@ -271,7 +363,7 @@ Kindly confirm your availability for the above schedule.`;
               <motion.button
                 whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
                 type="submit" disabled={loading}
-                className={`w-full py-4 rounded-xl font-bold text-white shadow-xl flex items-center justify-center gap-2 transition-all 
+                className={`w-full py-4 rounded-xl font-bold text-white shadow-xl flex items-center justify-center gap-2 transition-all
                   ${loading ? 'bg-blue-500 cursor-not-allowed' : 'bg-gradient-to-r from-slate-900 to-slate-800 hover:from-blue-600 hover:to-blue-500'}`}
               >
                 {loading ? "Success! Syncing..." : <>Submit Evaluation <Send size={18} /></>}
@@ -330,15 +422,6 @@ Kindly confirm your availability for the above schedule.`;
                   Score &lt; 50% = Low Fit
                 </div>
               </GlassCard>
-
-              <motion.button
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                onClick={handleWhatsAppInvite}
-                className="w-full py-4 rounded-xl font-bold text-white shadow-xl flex items-center justify-center gap-2 transition-all bg-[#25D366] hover:bg-[#20ba59]"
-              >
-                Send WhatsApp Invite <MessageSquare size={18} />
-              </motion.button>
             </div>
           </div>
         </div>
