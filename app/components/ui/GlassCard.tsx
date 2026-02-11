@@ -24,13 +24,12 @@ export const GlassCard = ({ children, className, gradient }: GlassCardProps) => 
       transition={{ duration: 0.5, ease: "easeOut" }}
       className={cn(
         "relative backdrop-blur-xl bg-white/70 border border-white/50 shadow-xl rounded-2xl overflow-hidden", // Light Mode defaults
-        "dark:bg-slate-900/60 dark:border-white/10 dark:shadow-2xl", // Dark Mode defaults
         className
       )}
     >
       {gradient && (
-        <div 
-          className={`absolute inset-0 opacity-20 pointer-events-none bg-gradient-to-br ${gradient}`} 
+        <div
+          className={`absolute inset-0 opacity-20 pointer-events-none bg-gradient-to-br ${gradient}`}
         />
       )}
       <div className="relative z-10">

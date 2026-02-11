@@ -125,8 +125,8 @@ Kindly confirm your availability for the above schedule.`;
   return (
     <main className="min-h-screen text-slate-800 font-sans selection:bg-blue-200 selection:text-blue-900 bg-slate-50 relative">
       <div className="fixed inset-0 z-0 pointer-events-none">
-        <div className="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] rounded-full bg-blue-400/20 blur-3xl animate-pulse" />
-        <div className="absolute bottom-[-10%] right-[-10%] w-[600px] h-[600px] rounded-full bg-purple-400/20 blur-3xl animate-pulse delay-1000" />
+        <div className="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] rounded-full bg-slate-400/20 blur-3xl animate-pulse" />
+        <div className="absolute bottom-[-10%] right-[-10%] w-[600px] h-[600px] rounded-full bg-slate-400/20 blur-3xl animate-pulse delay-1000" />
       </div>
 
       <div className="relative z-10 max-w-5xl mx-auto py-12 px-4 md:px-6">
