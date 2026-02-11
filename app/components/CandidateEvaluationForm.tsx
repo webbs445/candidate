@@ -31,6 +31,8 @@ export default function CandidateEvaluationForm() {
     interviewer: "Vipin Kumar",
     date: "",
     time: "",
+    currentSalary: "",
+    expectedSalary: "",
     noticePeriod: "30 days"
   });
 
@@ -99,7 +101,7 @@ export default function CandidateEvaluationForm() {
   };
 
   const handleWhatsAppInvite = () => {
-    const { name, mobile, position, date, time, interviewer } = candidateInfo;
+    const { name, mobile, position, date, time } = candidateInfo;
     if (!mobile || !name) {
       alert("Please fill in candidate name and mobile number first.");
       return;
@@ -181,8 +183,8 @@ Kindly confirm your availability for the above schedule.`;
                   <AnimatedInput label="Date of Interview" name="interviewDate" type="date" required icon={<Calendar size={18} />} value={candidateInfo.date} onChange={(e) => setCandidateInfo({ ...candidateInfo, date: e.target.value })} />
                   <AnimatedInput label="Time of Interview" name="interviewTime" type="time" required icon={<Clock size={18} />} value={candidateInfo.time} onChange={(e) => setCandidateInfo({ ...candidateInfo, time: e.target.value })} />
 
-                  <AnimatedInput label="Current Salary" name="currentSalary" placeholder="e.g. 50,000" icon={<span className="text-[10px] font-bold group-hover:text-blue-500 transition-colors">AED</span>} />
-                  <AnimatedInput label="Expected Salary" name="expectedSalary" placeholder="e.g. 65,000" icon={<span className="text-[10px] font-bold group-hover:text-blue-500 transition-colors">AED</span>} />
+                  <AnimatedInput label="Current Salary" name="currentSalary" placeholder="e.g. 50,000" icon={<span className="text-[10px] font-bold group-hover:text-blue-500 transition-colors">AED</span>} value={candidateInfo.currentSalary} onChange={(e) => setCandidateInfo({ ...candidateInfo, currentSalary: e.target.value })} />
+                  <AnimatedInput label="Expected Salary" name="expectedSalary" placeholder="e.g. 65,000" icon={<span className="text-[10px] font-bold group-hover:text-blue-500 transition-colors">AED</span>} value={candidateInfo.expectedSalary} onChange={(e) => setCandidateInfo({ ...candidateInfo, expectedSalary: e.target.value })} />
 
                   <div className="space-y-4">
                     <AnimatedSelect
