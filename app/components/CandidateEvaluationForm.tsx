@@ -72,8 +72,8 @@ export default function CandidateEvaluationForm() {
       interviewer: candidateInfo.interviewer,
       interviewDate: candidateInfo.date,
       interviewTime: candidateInfo.time,
-      currentSalary: formData.get('currentSalary'),
-      expectedSalary: formData.get('expectedSalary'),
+      currentSalary: candidateInfo.currentSalary,
+      expectedSalary: candidateInfo.expectedSalary,
       noticePeriod: candidateInfo.noticePeriod === 'Other' ? customNoticePeriod : candidateInfo.noticePeriod,
       cvFile: cvBase64,
       cvFileName: file?.name || "No CV",
@@ -82,6 +82,8 @@ export default function CandidateEvaluationForm() {
       performanceImpression: currentImpression,
       comments: comments
     };
+
+    console.log("Submitting Payload:", payload);
 
     try {
       await fetch(process.env.NEXT_PUBLIC_GOOGLE_SHEET_URL!, {
@@ -186,8 +188,8 @@ Kindly confirm your availability for the above schedule.`;
                     <span className="text-3xl font-black text-slate-800">{weightedScorePercentage.toFixed(1)}%</span>
                   </div>
                   <p className={`text-sm font-bold ${currentImpression === 'Strong Fit' ? 'text-green-600' :
-                      currentImpression === 'Good Fit' ? 'text-blue-600' :
-                        currentImpression === 'Average Fit' ? 'text-orange-600' : 'text-red-600'
+                    currentImpression === 'Good Fit' ? 'text-blue-600' :
+                      currentImpression === 'Average Fit' ? 'text-orange-600' : 'text-red-600'
                     }`}>{currentImpression}</p>
                 </div>
               </div>
