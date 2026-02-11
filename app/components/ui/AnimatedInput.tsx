@@ -10,7 +10,7 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 
 export const AnimatedInput = ({ label, icon, className, ...props }: InputProps) => {
   return (
-    <motion.div 
+    <motion.div
       className="relative group"
       initial={{ opacity: 0, x: -10 }}
       animate={{ opacity: 1, x: 0 }}
@@ -27,6 +27,7 @@ export const AnimatedInput = ({ label, icon, className, ...props }: InputProps) 
         )}
         <input
           {...props}
+          value={props.value ?? ""}
           className={`w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-slate-800 outline-none transition-all duration-300 focus:bg-white focus:border-blue-400 focus:ring-4 focus:ring-blue-100/50 ${icon ? 'pl-10' : ''} ${className || ''}`}
         />
       </div>
