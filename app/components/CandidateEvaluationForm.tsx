@@ -132,7 +132,7 @@ export default function CandidateEvaluationForm() {
     }
 
     const formattedMobile = mobile.startsWith('+') ? mobile.replace(/\s+/g, '') : `+${mobile.replace(/\s+/g, '')}`;
-    const message = `Hi Mr. ${name}
+    const message = `Hi ${name}
 
 Thank you for attending the first round of interviews with us. We’re pleased to invite you for a second round of face to face interview for the ${position} role.
 
