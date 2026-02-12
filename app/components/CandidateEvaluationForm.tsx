@@ -54,6 +54,17 @@ export default function CandidateEvaluationForm() {
     e.preventDefault();
     setLoading(true);
     const form = e.currentTarget;
+
+
+    const totalMetrics = METRICS.length;
+    const scoredMetrics = Object.keys(scores).length;
+
+    if (scoredMetrics < totalMetrics) {
+      alert(`Please complete all ${totalMetrics} competency assessments before submitting.`);
+      setLoading(false);
+      return;
+    }
+
     const formData = new FormData(form);
 
     let cvBase64 = "";
@@ -242,7 +253,7 @@ Kindly confirm your availability for the above schedule.`;
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <AnimatedInput label="Candidate Name" name="candidateName" required placeholder="John Doe" icon={<User size={18} />} value={candidateInfo.name} onChange={(e) => setCandidateInfo({ ...candidateInfo, name: e.target.value })} />
-                  <AnimatedInput label="Mobile Number" name="candidateMobile" placeholder="+971 50 ..." icon={<Phone size={18} />} value={candidateInfo.mobile} onChange={(e) => setCandidateInfo({ ...candidateInfo, mobile: e.target.value })} />
+                  <AnimatedInput label="Mobile Number" name="candidateMobile" required placeholder="+971 50 ..." icon={<Phone size={18} />} value={candidateInfo.mobile} onChange={(e) => setCandidateInfo({ ...candidateInfo, mobile: e.target.value })} />
 
                   <AnimatedSelect
                     label="Position Applied For"
@@ -277,13 +288,14 @@ Kindly confirm your availability for the above schedule.`;
                   <AnimatedInput label="Date of Interview" name="interviewDate" type="date" required icon={<Calendar size={18} />} value={candidateInfo.date} onChange={(e) => setCandidateInfo({ ...candidateInfo, date: e.target.value })} />
                   <AnimatedInput label="Time of Interview" name="interviewTime" type="time" required icon={<Clock size={18} />} value={candidateInfo.time} onChange={(e) => setCandidateInfo({ ...candidateInfo, time: e.target.value })} />
 
-                  <AnimatedInput label="Current Salary" name="currentSalary" placeholder="e.g. 50,000" icon={<span className="text-[10px] font-bold group-hover:text-blue-500 transition-colors">AED</span>} value={candidateInfo.currentSalary} onChange={(e) => setCandidateInfo({ ...candidateInfo, currentSalary: e.target.value })} />
-                  <AnimatedInput label="Expected Salary" name="expectedSalary" placeholder="e.g. 65,000" icon={<span className="text-[10px] font-bold group-hover:text-blue-500 transition-colors">AED</span>} value={candidateInfo.expectedSalary} onChange={(e) => setCandidateInfo({ ...candidateInfo, expectedSalary: e.target.value })} />
+                  <AnimatedInput label="Current Salary" name="currentSalary" required placeholder="e.g. 50,000" icon={<span className="text-[10px] font-bold group-hover:text-blue-500 transition-colors">AED</span>} value={candidateInfo.currentSalary} onChange={(e) => setCandidateInfo({ ...candidateInfo, currentSalary: e.target.value })} />
+                  <AnimatedInput label="Expected Salary" name="expectedSalary" required placeholder="e.g. 65,000" icon={<span className="text-[10px] font-bold group-hover:text-blue-500 transition-colors">AED</span>} value={candidateInfo.expectedSalary} onChange={(e) => setCandidateInfo({ ...candidateInfo, expectedSalary: e.target.value })} />
 
                   <div className="space-y-4">
                     <AnimatedSelect
                       label="Notice Period"
                       name="noticePeriod"
+                      required
                       icon={<Clock size={18} />}
                       value={candidateInfo.noticePeriod}
                       onChange={(e) => setCandidateInfo({ ...candidateInfo, noticePeriod: e.target.value })}
@@ -300,6 +312,7 @@ Kindly confirm your availability for the above schedule.`;
                           <AnimatedInput
                             label="Specify Notice Period"
                             placeholder="e.g. 45 days"
+                            required
                             value={customNoticePeriod}
                             onChange={(e) => setCustomNoticePeriod(e.target.value)}
                           />
@@ -355,6 +368,7 @@ Kindly confirm your availability for the above schedule.`;
                   <h2 className="text-xl font-bold text-slate-800">Additional Comments</h2>
                 </div>
                 <textarea
+                  required
                   value={comments}
                   onChange={(e) => setComments(e.target.value)}
                   placeholder="Summarize candidate strengths or concerns..."
