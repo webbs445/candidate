@@ -7,6 +7,7 @@ import { GlassCard } from './ui/GlassCard';
 import { AnimatedInput } from './ui/AnimatedInput';
 import { AnimatedSelect } from './ui/AnimatedSelect';
 import { RatingInput } from './ui/RatingInput';
+import { AnimatedCombobox } from './ui/AnimatedCombobox';
 
 const METRICS = [
   { id: 'language', label: 'Language', weight: 0.10, hint: 'Clarity & Fluency' },
@@ -23,6 +24,7 @@ export default function CandidateEvaluationForm() {
   const [loading, setLoading] = useState(false);
   const [comments, setComments] = useState("");
   const [customNoticePeriod, setCustomNoticePeriod] = useState("");
+  const [customPosition, setCustomPosition] = useState("");
 
   const [submitted, setSubmitted] = useState(false);
 
@@ -255,18 +257,25 @@ Kindly confirm your availability for the above schedule.`;
                   <AnimatedInput label="Candidate Name" name="candidateName" required placeholder="John Doe" icon={<User size={18} />} value={candidateInfo.name} onChange={(e) => setCandidateInfo({ ...candidateInfo, name: e.target.value })} />
                   <AnimatedInput label="Mobile Number" name="candidateMobile" required placeholder="+971 50 ..." icon={<Phone size={18} />} value={candidateInfo.mobile} onChange={(e) => setCandidateInfo({ ...candidateInfo, mobile: e.target.value })} />
 
-                  <AnimatedSelect
+                  <AnimatedCombobox
                     label="Position Applied For"
-                    name="position"
-                    required
                     icon={<Briefcase size={18} />}
                     value={candidateInfo.position}
-                    onChange={(e) => setCandidateInfo({ ...candidateInfo, position: e.target.value })}
+                    onChange={(val) => setCandidateInfo({ ...candidateInfo, position: val })}
                     options={[
-                      { value: 'Business Consultant', label: 'Business Consultant' },
-                      { value: 'Sales Executive', label: 'Sales Executive' },
-                      { value: 'Administrative Assistant', label: 'Administrative Assistant' }
+                      'Business Consultant',
+                      'Sales Executive',
+                      'Accountant',
+                      'Public Relation Officer',
+                      'Tax Consultant',
+                      'Client Relation Executive',
+                      'Business Development Executive',
+                      'Business Setup Advisor',
+                      'Legal Advisor',
+                      'Accounts Manager'
                     ]}
+                    required
+                    placeholder="Type to search or enter new position"
                   />
 
                   <AnimatedSelect
